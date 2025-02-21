@@ -1,0 +1,10 @@
+name: Workflow B
+on:
+  workflow_call:
+
+jobs:
+  job-b:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Running Workflow B
+        run: echo "Executing Workflow B"
