@@ -11,6 +11,10 @@ on:
         description: Test scenario tags
         required: false
         default: none
+  push:
+   branches:
+	on:
+	tetsing
 jobs:
   print-inputs:
     runs-on: ubuntu-latest
