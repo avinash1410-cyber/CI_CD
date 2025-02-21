@@ -1,26 +1,28 @@
 ---
 name: Test Custom Action with Inputs
+
 on:
   workflow_dispatch:
     inputs:
       logLevel:
-        description: Log level
+        description: "Log level"
         required: true
-        default: warning
+        default: "warning"
       tags:
-        description: Test scenario tags
+        description: "Test scenario tags"
         required: false
-        default: none
+        default: "none"
   push:
-   branches:
-	on:
-	tetsing
+    branches:
+      - "testing"  # Ensure branch name is correct
+
 jobs:
   print-inputs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4  # Use latest version
+
       - name: Print input values
         run: |
           echo "Log Level: ${{ github.event.inputs.logLevel }}"
