@@ -20,9 +20,9 @@ jobs:
 
       - name: Conditional Print Based on Input
         run: |
-          if [[ "${{ github.event.inputs.tags }}" == "A" ]]; then
+          if [[ "${{ github.event.inputs.logLevel }}" == "A" ]]; then
             echo "Input is A"
-          elif [[ "${{ github.event.inputs.tags }}" == "B" ]]; then
+          elif [[ "${{ github.event.inputs.logLevel }}" == "B" ]]; then
             echo "Input is B"
           else
             echo "Input is neither A nor B"
