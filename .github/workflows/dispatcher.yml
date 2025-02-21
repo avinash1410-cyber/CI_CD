@@ -8,7 +8,7 @@ on:
         default: warning
 
 jobs:
-  print-inputs:
+  taking-inputs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -18,12 +18,18 @@ jobs:
         run: |
           echo "Log Level: ${{ github.event.inputs.logLevel }}"
 
-      - name: Conditional Print Based on Input
-        run: |
-          if [[ "${{ github.event.inputs.logLevel }}" == "A" ]]; then
-            echo "Input is A"
-          elif [[ "${{ github.event.inputs.logLevel }}" == "B" ]]; then
-            echo "Input is B"
-          else
-            echo "Input is neither A nor B"
-          fi
+  deploy-via-A:
+    needs: taking-inputs
+    runs-on: ubuntu-latest
+    if: github.event.inputs.logLevel == 'A'
+    steps:
+      - name: Print A
+        run: echo "Deploying via A"
+
+  deploy-via-B:
+    needs: taking-inputs
+    runs-on: ubuntu-latest
+    if: github.event.inputs.logLevel == 'B'
+    steps:
+      - name: Print B
+        run: echo "Deploying via B"
