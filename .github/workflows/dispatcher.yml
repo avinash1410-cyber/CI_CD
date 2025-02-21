@@ -1,30 +1,29 @@
-name: Dispatcher Workflow
-
+name: Test Custom Action with Inputs
 on:
   workflow_dispatch:
     inputs:
-      choice:
-        description: 'Choose Workflow (A or B)'
+      logLevel:
+        description: Log level
         required: true
-        type: choice
-        options:
-          - A
-          - B
+        default: warning
 
 jobs:
-  trigger-workflow:
+  print-inputs:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Workflow A
-        if: ${{ github.event.inputs.choice == 'A' }}
-        run: |
-          gh workflow run workflow-a.yml --ref main
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Trigger Workflow B
-        if: ${{ github.event.inputs.choice == 'B' }}
+      - name: Print input values
         run: |
-          gh workflow run workflow-b.yml --ref main
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          echo "Log Level: ${{ github.event.inputs.logLevel }}"
+
+      - name: Conditional Print Based on Input
+        run: |
+          if [[ "${{ github.event.inputs.tags }}" == "A" ]]; then
+            echo "Input is A"
+          elif [[ "${{ github.event.inputs.tags }}" == "B" ]]; then
+            echo "Input is B"
+          else
+            echo "Input is neither A nor B"
+          fi
