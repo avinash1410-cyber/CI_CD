@@ -1,0 +1,30 @@
+name: Dispatcher Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      choice:
+        description: 'Choose Workflow (A or B)'
+        required: true
+        type: choice
+        options:
+          - A
+          - B
+
+jobs:
+  trigger-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Workflow A
+        if: ${{ github.event.inputs.choice == 'A' }}
+        run: |
+          gh workflow run workflow-a.yml --ref main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Trigger Workflow B
+        if: ${{ github.event.inputs.choice == 'B' }}
+        run: |
+          gh workflow run workflow-b.yml --ref main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

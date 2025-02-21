@@ -1,0 +1,14 @@
+name: Workflow A
+
+on:
+  workflow_run:
+    workflows: ["Dispatcher Workflow"]
+    types:
+      - requested
+
+jobs:
+  workflow_A:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Workflow A
+        run: echo "Executing Workflow A"
