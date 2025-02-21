@@ -1,0 +1,26 @@
+name: Dispatcher Workflow
+on:
+  workflow_dispatch:
+    inputs:
+      targetWorkflow:
+        description: "Select workflow"
+        required: true
+        type: choice
+        options:
+          - workflow-a
+          - workflow-b
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run Workflow A
+        if: ${{ github.event.inputs.targetWorkflow == 'workflow-a' }}
+        uses: avinash1410-cyber/CI_CD/.github/workflows/workflow-a.yml@main  # Use full repository reference
+
+      - name: Run Workflow B
+        if: ${{ github.event.inputs.targetWorkflow == 'workflow-b' }}
+        uses: avinash1410-cyber/CI_CD/.github/workflows/workflow-b.yml@main
